@@ -18,10 +18,3 @@ Author: Martin Di-Rollo <martin.di-rollo@edf.fr>
  
  SOURCES = \
  	src/config.d \
-@@ -45,6 +45,3 @@ uninstall:
- 	rm -f $(DESTDIR)/usr/lib/systemd/user/onedrive.service
- 	rm -f $(DESTDIR)/usr/lib/systemd/user/onedrive@.service
- 	rm -f $(DESTDIR)/etc/logrotate.d/onedrive
--
--version: .git/HEAD .git/index
--	echo $(shell git describe --tags) >version

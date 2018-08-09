@@ -1,3 +1,9 @@
+onedrive (2.0.2+20180807-2) scibian9; urgency=medium
+
+  * Install in /usr instead of /usr/local 
+
+ -- Martin Di-Rollo <martin.di-rollo@edf.fr>  Thu, 09 Aug 2018 14:01:07 +0200
+
 onedrive (2.0.2+20180807-1) scibian9; urgency=medium
 
   * Import new upstream version 2.0.2+20180807 (from https://github.com/abraunegg/onedrive)
