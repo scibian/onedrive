@@ -1,0 +1,27 @@
+Description: Common makefile fixes 
+ Install in /usr instead of /usr/local, and pre-generate version file
+ .
+ onedrive (2.0.2+20180807-1) scibian9; urgency=medium
+ .
+   * Import new upstream version 2.0.2+20180807 (from https://github.com/abraunegg/onedrive)
+Author: Martin Di-Rollo <martin.di-rollo@edf.fr>
+
+---
+
+--- onedrive-2.0.2+20180807.orig/Makefile
++++ onedrive-2.0.2+20180807/Makefile
+@@ -1,6 +1,6 @@
+ DC = dmd
+ DFLAGS = -g -ofonedrive -O -L-lcurl -L-lsqlite3 -L-ldl -J.
+-PREFIX = /usr/local
++PREFIX = /usr
+ 
+ SOURCES = \
+ 	src/config.d \
+@@ -45,6 +45,3 @@ uninstall:
+ 	rm -f $(DESTDIR)/usr/lib/systemd/user/onedrive.service
+ 	rm -f $(DESTDIR)/usr/lib/systemd/user/onedrive@.service
+ 	rm -f $(DESTDIR)/etc/logrotate.d/onedrive
+-
+-version: .git/HEAD .git/index
+-	echo $(shell git describe --tags) >version
