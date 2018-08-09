@@ -1,4 +1,4 @@
-onedrive (2.0.2+20180807-2) scibian9; urgency=medium
+onedrive (2.0.2+20180807-2) scibian9+dmd; urgency=medium
 
   * Install in /usr instead of /usr/local 
 
