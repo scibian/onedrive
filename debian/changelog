@@ -1,0 +1,5 @@
+onedrive (2.0.2+20180807-1) scibian9; urgency=medium
+
+  * Import new upstream version 2.0.2+20180807 (from https://github.com/abraunegg/onedrive)
+
+ -- Martin Di-Rollo <martin.di-rollo@edf.fr>  Wed, 08 Aug 2018 15:18:29 +0200
