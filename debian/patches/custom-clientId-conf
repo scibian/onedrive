@@ -1,0 +1,94 @@
+Description: ClientID and TenantID can now be configured 
+ Add the possibility to configure the client ID and the tenant ID
+ in the configuration file 
+ .
+ onedrive (2.0.2+20180807-4) scibian9+dmd; urgency=medium
+ .
+   * ClientID and TenantID can now be configured
+Author: Martin Di-Rollo <martin.di-rollo@edf.fr>
+
+---
+
+--- onedrive-2.0.2+20180807.orig/src/config.d
++++ onedrive-2.0.2+20180807/src/config.d
+@@ -38,6 +38,10 @@ final class Config
+ 		setValue("monitor_interval", "45");
+ 		// By default we will process remote deletes
+ 		setValue("no-remote-delete", "false");
++		// Default client ID
++		setValue("client_id", "22c49a0d-d21c-4792-aed1-8f163c982546");
++		// Default tenant ID
++		setValue("tenant_id", "common");
+     
+ 		if (!load(userConfigFilePath)) {
+ 			log.vlog("No config file found, using defaults");
+--- onedrive-2.0.2+20180807.orig/src/onedrive.d
++++ onedrive-2.0.2+20180807/src/onedrive.d
+@@ -7,10 +7,6 @@ static import log;
+ shared bool debugResponse = false;
+ 
+ private immutable {
+-	string clientId = "22c49a0d-d21c-4792-aed1-8f163c982546";
+-	string authUrl = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize";
+-	string redirectUrl = "https://login.microsoftonline.com/common/oauth2/nativeclient";
+-	string tokenUrl = "https://login.microsoftonline.com/common/oauth2/v2.0/token";
+ 	string driveUrl = "https://graph.microsoft.com/v1.0/me/drive";
+ 	string itemByIdUrl = "https://graph.microsoft.com/v1.0/me/drive/items/";
+ 	string itemByPathUrl = "https://graph.microsoft.com/v1.0/me/drive/root:/";
+@@ -44,6 +40,7 @@ final class OneDriveApi
+ {
+ 	private Config cfg;
+ 	private string refreshToken, accessToken;
++	private string authUrl, redirectUrl, tokenUrl;
+ 	private SysTime accessTokenExpiration;
+ 	/* private */ HTTP http;
+ 
+@@ -53,6 +50,7 @@ final class OneDriveApi
+ 	this(Config cfg, bool debugHttp)
+ 	{
+ 		this.cfg = cfg;
++		setAuthUrls();
+ 		http = HTTP();
+ 		http.dnsTimeout = (dur!"seconds"(5));
+ 		http.dataTimeout = (dur!"seconds"(3600));
+@@ -62,6 +60,13 @@ final class OneDriveApi
+         }
+ 	}
+ 
++	void setAuthUrls()
++	{
++		this.authUrl = "https://login.microsoftonline.com/"~cfg.getValue("tenant_id")~"/oauth2/v2.0/authorize";
++		this.tokenUrl = "https://login.microsoftonline.com/"~cfg.getValue("tenant_id")~"/oauth2/v2.0/token";
++		this.redirectUrl = "https://login.microsoftonline.com/common/oauth2/nativeclient";
++	}
++
+ 	bool init()
+ 	{
+ 		try {
+@@ -76,7 +81,7 @@ final class OneDriveApi
+ 	{
+ 		import std.stdio, std.regex;
+ 		char[] response;
+-		string url = authUrl ~ "?client_id=" ~ clientId ~ "&scope=files.readwrite%20files.readwrite.all%20offline_access&response_type=code&redirect_uri=" ~ redirectUrl;
++		string url = authUrl ~ "?client_id=" ~ cfg.getValue("client_id") ~ "&scope=files.readwrite%20files.readwrite.all%20offline_access&response_type=code&redirect_uri=" ~ redirectUrl;
+ 		log.log("Authorize this app visiting:\n");
+ 		write(url, "\n\n", "Enter the response uri: ");
+ 		readln(response);
+@@ -259,7 +264,7 @@ final class OneDriveApi
+ 	private void redeemToken(const(char)[] authCode)
+ 	{
+ 		const(char)[] postData =
+-			"client_id=" ~ clientId ~
++			"client_id=" ~ cfg.getValue("client_id") ~
+ 			"&redirect_uri=" ~ redirectUrl ~
+ 			"&code=" ~ authCode ~
+ 			"&grant_type=authorization_code";
+@@ -269,7 +274,7 @@ final class OneDriveApi
+ 	private void newToken()
+ 	{
+ 		string postData =
+-			"client_id=" ~ clientId ~
++			"client_id=" ~ cfg.getValue("client_id") ~
+ 			"&redirect_uri=" ~ redirectUrl ~
+ 			"&refresh_token=" ~ refreshToken ~
+ 			"&grant_type=refresh_token";

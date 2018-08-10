@@ -1,3 +1,9 @@
+onedrive (2.0.2+20180807-4) scibian9+dmd; urgency=medium
+
+  * ClientID and TenantID can now be configured 
+
+ -- Martin Di-Rollo <martin.di-rollo@edf.fr>  Fri, 10 Aug 2018 16:50:01 +0200
+
 onedrive (2.0.2+20180807-3) scibian9+dmd; urgency=medium
 
   * Add dmd to the build deps 
