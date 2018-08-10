@@ -1,0 +1,23 @@
+Description: Pregenerate the code version
+ Pregenerate the version file, containing the commit hash 
+ .
+ onedrive (2.0.2+20180807-3) scibian9+dmd; urgency=medium
+ .
+   * Add dmd to the build deps
+Author: Martin Di-Rollo <martin.di-rollo@edf.fr>
+
+---
+
+--- onedrive-2.0.2+20180807.orig/Makefile
++++ onedrive-2.0.2+20180807/Makefile
+@@ -45,6 +45,3 @@ uninstall:
+ 	rm -f $(DESTDIR)/usr/lib/systemd/user/onedrive.service
+ 	rm -f $(DESTDIR)/usr/lib/systemd/user/onedrive@.service
+ 	rm -f $(DESTDIR)/etc/logrotate.d/onedrive
+-
+-version: .git/HEAD .git/index
+-	echo $(shell git describe --tags) >version
+--- /dev/null
++++ onedrive-2.0.2+20180807/version
+@@ -0,0 +1 @@
++upstream/2.0.2+20180807-6-g90b065c
