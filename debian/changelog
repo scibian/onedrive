@@ -1,3 +1,9 @@
+onedrive (2.0.2+20180807-5) scibian9+dmd; urgency=medium
+
+  * Make the verbose mode slightly less verbose (makes it easier to parse the logs)
+
+ -- Martin Di-Rollo <martin.di-rollo@edf.fr>  Thu, 20 Sep 2018 14:53:22 +0200
+
 onedrive (2.0.2+20180807-4) scibian9+dmd; urgency=medium
 
   * ClientID and TenantID can now be configured 

@@ -1,0 +1,75 @@
+Index: onedrive/src/sync.d
+===================================================================
+--- onedrive.orig/src/sync.d
++++ onedrive/src/sync.d
+@@ -725,7 +725,7 @@ final class SyncEngine
+ 
+ 	private void uploadDifferences(Item item)
+ 	{
+-		log.vlog("Processing ", item.name);
++		// log.vlog("Processing ", item.name);
+ 
+ 		string path;
+ 		bool unwanted = selectiveSync.isNameExcluded(item.name);
+@@ -774,14 +774,14 @@ final class SyncEngine
+ 				uploadDeleteItem(item, path);
+ 				uploadNewFile(path);
+ 			} else {
+-				log.vlog("The directory has not changed");
++				// log.vlog("The directory has not changed");
+ 				// loop trough the children
+ 				foreach (Item child; itemdb.selectChildren(item.driveId, item.id)) {
+ 					uploadDifferences(child);
+ 				}
+ 			}
+ 		} else {
+-			log.vlog("The directory has been deleted");
++			// log.vlog("The directory has been deleted");
+ 			uploadDeleteItem(item, path);
+ 		}
+ 	}
+@@ -820,10 +820,10 @@ final class SyncEngine
+ 				localModifiedTime.fracSecs = Duration.zero;
+ 				
+ 				if (localModifiedTime != item.mtime) {
+-					log.vlog("The file last modified time has changed");					
++					// log.vlog("The file last modified time has changed");					
+ 					string eTag = item.eTag;
+ 					if (!testFileHash(path, item)) {
+-						log.vlog("The file content has changed");
++						// log.vlog("The file content has changed");
+ 						write("Uploading file ", path, " ... ");
+ 						JSONValue response;
+ 						
+@@ -901,7 +901,7 @@ final class SyncEngine
+ 						uploadLastModifiedTime(item.driveId, item.id, eTag, localModifiedTime.toUTC());
+ 					}
+ 				} else {
+-					log.vlog("The file has not changed");
++					// log.vlog("The file has not changed");
+ 				}
+ 			} else {
+ 				log.vlog("The item was a file but now is a directory");
+@@ -909,7 +909,7 @@ final class SyncEngine
+ 				uploadCreateDir(path);
+ 			}
+ 		} else {
+-			log.vlog("The file has been deleted locally");
++			// log.vlog("The file has been deleted locally");
+ 			if (cfg.getValue("no-remote-delete") == "true") {
+ 				// do not process remote delete
+ 				log.vlog("Skipping remote delete as --upload-only & --no-remote-delete configured");
+@@ -967,11 +967,11 @@ final class SyncEngine
+ 			// filter out user configured items to skip
+ 			if (path != ".") {
+ 				if (selectiveSync.isNameExcluded(baseName(path))) {
+-					log.vlog("Skipping item - excluded by skip_file config: ", path);
++					// log.vlog("Skipping item - excluded by skip_file config: ", path);
+ 					return;
+ 				}
+ 				if (selectiveSync.isPathExcluded(path)) {
+-					log.vlog("Skipping item - path excluded: ", path);
++					// log.vlog("Skipping item - path excluded: ", path);
+ 					return;
+ 				}
+ 			}
