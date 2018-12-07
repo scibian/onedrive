@@ -1,0 +1,38 @@
+Change a few log messages from verbose to normal, so that we can start the app in non-verbose mode and still parse the necessary info
+Index: onedrive/src/sync.d
+===================================================================
+--- onedrive.orig/src/sync.d
++++ onedrive/src/sync.d
+@@ -164,10 +164,10 @@ final class SyncEngine
+ 		remainingFreeSpace = oneDriveDetails["quota"]["remaining"].integer;
+ 		
+ 		// Display accountType, defaultDriveId, defaultRootId & remainingFreeSpace for verbose logging purposes
+-		log.vlog("Account Type: ", accountType);
+-		log.vlog("Default Drive ID: ", defaultDriveId);
+-		log.vlog("Default Root ID: ", defaultRootId);
+-		log.vlog("Remaining Free Space: ", remainingFreeSpace);
++		log.log("Account Type: ", accountType);
++		log.log("Default Drive ID: ", defaultDriveId);
++		log.log("Default Root ID: ", defaultRootId);
++		log.log("Remaining Free Space: ", remainingFreeSpace);
+ 	
+ 		// Check the local database to ensure the OneDrive Root details are in the database
+ 		checkDatabaseForOneDriveRoot();
+@@ -308,7 +308,7 @@ final class SyncEngine
+ 	// id is the root of the drive or a shared folder
+ 	private void applyDifferences(string driveId, const(char)[] id)
+ 	{
+-		log.vlog("Applying changes of Path ID: " ~ id);
++		log.log("Applying changes of Path ID: " ~ id);
+ 		JSONValue changes;
+ 		string deltaLink = itemdb.getDeltaLink(driveId, id);
+ 		
+@@ -997,7 +997,7 @@ final class SyncEngine
+ 					if (!itemdb.selectByPath(path, defaultDriveId, item)) {
+ 						uploadNewFile(path);
+ 						remainingFreeSpace = (remainingFreeSpace - fileSize);
+-						log.vlog("Remaining free space: ", remainingFreeSpace);
++						log.log("Remaining Free Space: ", remainingFreeSpace);
+ 					}
+ 				} else {
+ 					// Not enough free space

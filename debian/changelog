@@ -1,3 +1,9 @@
+onedrive (2.0.2+20180807-6) scibian9+dmd; urgency=medium
+
+  * Make the non-verbose mode... slightly more verbose, to allow us to start in non-verbose and still parse the necessary info 
+
+ -- Martin Di-Rollo <martin.di-rollo@edf.fr>  Fri, 07 Dec 2018 09:44:36 +0100
+
 onedrive (2.0.2+20180807-5) scibian9+dmd; urgency=medium
 
   * Make the verbose mode slightly less verbose (makes it easier to parse the logs)

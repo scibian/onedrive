@@ -2,3 +2,4 @@ common-makefile-fixes
 pregenerate_version
 custom-clientId-conf
 less-verbose
+less-verbose-2
